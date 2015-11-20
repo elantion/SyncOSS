@@ -10,7 +10,12 @@ so it make local and OSS absolute the same.
 在使用Gulp的时候我希望生成的文件能自动同步到阿里云OSS，这样我就不必每次编辑完文件之后都要手动更新。这款小工具不仅有上传和更新功能，还带有删除功能，
 所以它能保证本地与OSS的文件是绝对一致。
 ## 使用方法 Usage
-Example 参考以下代码:
+Install 安装
+```
+npm install syncoss --save
+```
+
+Config example 配置参考以下代码:
 
 You can put this code into your enter js file(app.js).
 Or you can put it somewhere else. For example, under a url route, so you can synchronize when you enter the URL.
