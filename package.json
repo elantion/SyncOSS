@@ -1,0 +1,29 @@
+{
+  "name": "syncoss",
+  "version": "1.0.0",
+  "description": "A Node.js package used for synchronizing local files and OSS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elantion/SyncOSS.git"
+  },
+  "keywords": [
+    "aliyun",
+    "oss",
+    "sync",
+    "files"
+  ],
+  "author": "JamesYin",
+  "dependencies": {
+  "aliyun-sdk": "^1.6.3",
+  "chokidar": "^1.3.0"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elantion/SyncOSS/issues"
+  },
+  "homepage": "https://github.com/elantion/SyncOSS#readme"
+}
