@@ -1,4 +1,4 @@
-# SyncOSS 阿里支OSS文件同步工具
+# SyncOSS 阿里云OSS文件同步工具
 A Node.js package used for synchronizing files between local and OSS.
 
 一个用于同步本地文件与阿里云OSS的Node.js模块。
