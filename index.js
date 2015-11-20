@@ -10,6 +10,7 @@ module.exports = function (options) {
     const prefix = cwd.replace(/\\/g, '/');
     oss.listObjects({
         Bucket: options.bucket,
+        MaxKeys: 1000,
         Prefix: prefix
     }, function (listObjectsErr, bucket) {
         if(listObjectsErr){return console.log(listObjectsErr); }
@@ -81,6 +82,7 @@ module.exports = function (options) {
             let standerFilePath = localFilePath.replace(/\\/g, '/');
             let bucketIndex = bucketPaths.indexOf(standerFilePath);
             if(bucketIndex === -1){
+                console.log('File not exist: ' + localFilePath);
                 upsertFile(localFilePath);
             }else{
                 if(localPaths.indexOf(standerFilePath) === -1){
