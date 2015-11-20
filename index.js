@@ -8,13 +8,30 @@ module.exports = function (options) {
     var oss = new ALY.OSS(options.oss);
     const cwd = options.cwd || '';
     const prefix = cwd.replace(/\\/g, '/');
-    oss.listObjects({
-        Bucket: options.bucket,
-        MaxKeys: 1000,
-        Prefix: prefix
-    }, function (listObjectsErr, bucket) {
-        if(listObjectsErr){return console.log(listObjectsErr); }
-        var bucketObjects = bucket.Contents;
+    var getObjects = function (cb) {
+        var nextMarker = '';
+        var bucketObjects = [];
+        var getObjectsLoop = function () {
+            if(typeof nextMarker === 'string'){
+                oss.listObjects({
+                    Bucket: options.bucket,
+                    MaxKeys: 100,
+                    Prefix: prefix,
+                    Marker: nextMarker
+                }, function (listObjectsErr, bucket) {
+                    if(listObjectsErr){return console.log(listObjectsErr); }
+                    nextMarker = bucket.NextMarker;
+                    bucketObjects = bucketObjects.concat(bucket.Contents);
+                    getObjectsLoop();
+                });
+            }else{
+                cb(bucketObjects);
+                return console.log('finish OSS request loop');
+            }
+        };
+        getObjectsLoop();
+    };
+    getObjects(function (bucketObjects) {
         //get all path of the bucket
         var bucketPaths = [];
         var localPaths = [];
@@ -83,7 +100,7 @@ module.exports = function (options) {
             let bucketIndex = bucketPaths.indexOf(standerFilePath);
             if(bucketIndex === -1){
                 console.log('File not exist: ' + localFilePath);
-                upsertFile(localFilePath);
+                //upsertFile(localFilePath);
             }else{
                 if(localPaths.indexOf(standerFilePath) === -1){
                     localPaths.push(standerFilePath);
