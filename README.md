@@ -73,6 +73,9 @@ require('syncoss')({
 
    监视本地文件夹，当发现有文件“增删改”，即会触发相应的同步行为。例如本地删除一个文件，OSS也同样会将这个文件删除。
 
+## bugs 已知问题
+1. 父文件夹下所有文件总数不能超过1000，计划使用递归方法，大家有什么好的解决办法吗？
+
 ## Author 作者
 James Yin, the owner of http://www.mentry.cn
 Love to share.
