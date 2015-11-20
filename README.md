@@ -67,6 +67,7 @@ require('syncoss')({
 3. Watch local files. If local files have 'change', 'add' or 'delete' actions. The OSS relate files will have same action.
 
    监视本地文件夹，当发现有文件“增删改”，即会触发相应的同步行为。例如本地删除一个文件，OSS也同样会将这个文件删除。
+
 ## Author 作者
 James Yin, the owner of http://www.mentry.cn
 Love to share.
