@@ -1,5 +1,6 @@
 'use strict';
 const chokidar = require('chokidar');
+const mime = require('mime');
 const ALY = require('aliyun-sdk');
 const path = require('path');
 const fs = require('fs');
@@ -45,6 +46,7 @@ module.exports = function (options) {
         var filesWatcher = chokidar.watch(pathsArr, options.watch);
         //upload or update file function
         var upsertFile = function (localFilePath) {
+            let contentType = mime.lookup(localFilePath);
             let standerFilePath = localFilePath.replace(/\\/g, '/');
             fs.readFile(localFilePath, function (readFileErr, fileData) {
                 if (readFileErr) {
@@ -53,7 +55,9 @@ module.exports = function (options) {
                 oss.putObject({
                     Bucket: options.bucket,
                     Body: fileData,
-                    Key: standerFilePath
+                    Key: standerFilePath,
+                    ContentEncoding: 'utf-8',
+                    ContentType: contentType
                 }, function (putObjectErr, uploadedFileInfo) {
                     if (putObjectErr) {
                         console.log('error:', putObjectErr);
@@ -100,7 +104,7 @@ module.exports = function (options) {
             let bucketIndex = bucketPaths.indexOf(standerFilePath);
             if(bucketIndex === -1){
                 console.log('File not exist: ' + localFilePath);
-                //upsertFile(localFilePath);
+                upsertFile(localFilePath);
             }else{
                 if(localPaths.indexOf(standerFilePath) === -1){
                     localPaths.push(standerFilePath);
