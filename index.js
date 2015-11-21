@@ -41,12 +41,20 @@ module.exports = function (options) {
         }
         const pathsArr = Array.isArray(options.src) ? options.src : options.src.split(' ');
         for(let i = 0; i < pathsArr.length; i++){
-            pathsArr[i] = path.join(cwd, pathsArr[i]);
+            if(pathsArr[i].startsWith('!')){
+                pathsArr[i] = pathsArr[i].replace('!', '');
+                pathsArr[i] = '!' + path.join(cwd, pathsArr[i]);
+            }else{
+                pathsArr[i] = path.join(cwd, pathsArr[i]);
+            }
         }
+        //set watcher default config value
+        options.watch = options.watch || {};
         var filesWatcher = chokidar.watch(pathsArr, options.watch);
         //upload or update file function
         var upsertFile = function (localFilePath) {
             let contentType = mime.lookup(localFilePath);
+            console.log(contentType);
             let standerFilePath = localFilePath.replace(/\\/g, '/');
             fs.readFile(localFilePath, function (readFileErr, fileData) {
                 if (readFileErr) {
