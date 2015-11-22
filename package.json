@@ -1,6 +1,6 @@
 {
   "name": "syncoss",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Node.js package used for synchronizing local files and OSS.",
   "main": "index.js",
   "scripts": {

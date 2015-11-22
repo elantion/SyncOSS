@@ -41,6 +41,9 @@ require('syncoss')({
         //不用修改
         apiVersion: '2013-10-15'
     },
+    //if you want to refresh cdn after upload or update files. Just provide below property.
+    //如果你需要在上传文件到ＯＳＳ之后更新相应的ＣＤＮ缓存，只需提供以下这个参数即可
+    cdnDomain: 'oss.mentry.cn',
     //bucket name
     //bucket 名称
     bucket: 'mentry-oss',

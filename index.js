@@ -4,9 +4,22 @@ const mime = require('mime');
 const ALY = require('aliyun-sdk');
 const path = require('path');
 const fs = require('fs');
+const url = require('url');
 const crypto = require('crypto');
 module.exports = function (options) {
+    //create OSS instance
+    options.oss.apiVersion = options.oss.apiVersion || '2013-10-15';
+    options.oss.securityToken = options.oss.securityToken || '';
     var oss = new ALY.OSS(options.oss);
+    //create cdn instance
+    if(options.cdnDomain){
+        options.cdn = options.cdn || {};
+        options.cdn.accessKeyId = options.cdn.accessKeyId || options.oss.accessKeyId;
+        options.cdn.secretAccessKey = options.cdn.secretAccessKey || options.oss.secretAccessKey;
+        options.cdn.endpoint = options.cdn.endpoint || 'https://cdn.aliyuncs.com';
+        options.cdn.apiVersion = options.cdn.apiVersion || '2014-11-11';
+        var cdn = new ALY.CDN(options.cdn);
+    }
     const cwd = options.cwd || '';
     const prefix = cwd.replace(/\\/g, '/');
     var getObjects = function (cb) {
@@ -54,7 +67,6 @@ module.exports = function (options) {
         //upload or update file function
         var upsertFile = function (localFilePath) {
             let contentType = mime.lookup(localFilePath);
-            console.log(contentType);
             let standerFilePath = localFilePath.replace(/\\/g, '/');
             fs.readFile(localFilePath, function (readFileErr, fileData) {
                 if (readFileErr) {
@@ -65,7 +77,9 @@ module.exports = function (options) {
                     Body: fileData,
                     Key: standerFilePath,
                     ContentEncoding: 'utf-8',
-                    ContentType: contentType
+                    ContentType: contentType,
+                    CacheControl: options.CacheControl || 'no-cache',
+                    Expires: options.Expires || null
                 }, function (putObjectErr, uploadedFileInfo) {
                     if (putObjectErr) {
                         console.log('error:', putObjectErr);
@@ -78,6 +92,20 @@ module.exports = function (options) {
                     }
                     if(localPaths.indexOf(standerFilePath) === -1){
                         localPaths.push(standerFilePath);
+                    }
+                    if(options.cdnDomain){
+                        var cdnObjectPath = url.format({
+                            protocol: 'http',
+                            hostname: options.cdnDomain,
+                            pathname: standerFilePath
+                        });
+                        cdn.refreshObjectCaches({
+                            ObjectType: 'File',
+                            ObjectPath: cdnObjectPath
+                        }, function(refreshCDNErr, refreshCDNRes) {
+                            if(refreshCDNErr){console.log('refresh cdn error: ', refreshCDNErr); }
+                            console.log('refresh cdn success: ', refreshCDNRes);
+                        });
                     }
                 });
             });
