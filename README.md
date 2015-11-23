@@ -5,12 +5,14 @@ A Node.js package used for synchronizing files between local and OSS.
 ## Intro 功能介绍
 I love Gulp, but I don't want to update my files to OSS after edit my source files. So I make this little tool to make a little help.
 After I make some progress, this module have more features then I expected.
+
 1. It is not just have 'upload' and 'update' functions and it is also include 'remove' function, it won't wast your oss storage.
 2. At the initiation, this module will compare local and OSS files by MD5. So, from the begin to the end, this module can make 
 local and OSS files are definitely the same.
 3. Include CDN refresh feature, so you don't need to fresh your CDN by hand.
 
 原本是想在使用Gulp的时候，我希望生成的文件能自动同步到阿里云OSS，这样我就不必每次编辑完文件之后都要手动更新。但随着不断更新，它的功能比想象的多得多。
+
 1. 不仅有上传和更新功能，还带有删除功能，不会浪费OSS的流量（省钱）。
 2. 在程序启动时，程序会把OSS和本地的文件进行MD5对比，所以由始至终，本地和OSS的文件都是相同的。
 3. 带有CDN刷新功能，所以你不必手动刷新文件。
