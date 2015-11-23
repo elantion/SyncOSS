@@ -81,11 +81,14 @@ require('syncoss')({
 ## Work flow 工作流程
 
 1. request all files' info under parent directory and store it into a array value. It is used for comparison.
+
    获取设定的OSS父文件夹下所有文件的信息，用于文件对比。
 2. Compare all files between local and OSS. If the ETag is different or OSS miss the file, SyncOSS will upload the local file to OSS.
    If OSS has files that local do not have, then SyncOSS will try to delete the files in OSS.
+   
    对比本地和OSS的文件，如ETag不同或者远程没有这个文件，那么就会上传或更新OSS的文件。如果OSS有，但本地没有的文件，那么SyncOSS就会将OSS这个文件删除。
 3. Watch local files. If local files have 'change', 'add' or 'delete' actions. The OSS relate files will have same action.
+
    监视本地文件夹，当发现有文件“增删改”，即会触发相应的同步行为。例如本地删除一个文件，OSS也同样会将这个文件删除。
 
 ## Author 作者
