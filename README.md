@@ -4,11 +4,16 @@ A Node.js package used for synchronizing files between local and OSS.
 一个用于同步本地文件与阿里云OSS的Node.js模块。
 ## Intro 功能介绍
 I love Gulp, but I don't want to update my files to OSS after edit my source files. So I make this little tool to make a little help.
-It is not just have 'upload' and 'update' functions and it is also include 'remove' function,
-so it make local and OSS absolute the same.
+After I make some progress, this module have more features then I expected.
+1. It is not just have 'upload' and 'update' functions and it is also include 'remove' function, it won't wast your oss storage.
+2. At the initiation, this module will compare local and OSS files by MD5. So, from the begin to the end, this module can make 
+local and OSS files are definitely the same.
+3. Include CDN refresh feature, so you don't need to fresh your CDN by hand.
 
-在使用Gulp的时候我希望生成的文件能自动同步到阿里云OSS，这样我就不必每次编辑完文件之后都要手动更新。这款小工具不仅有上传和更新功能，还带有删除功能，
-所以它能保证本地与OSS的文件是绝对一致。
+原本是想在使用Gulp的时候，我希望生成的文件能自动同步到阿里云OSS，这样我就不必每次编辑完文件之后都要手动更新。但随着不断更新，它的功能比想象的多得多。
+1. 不仅有上传和更新功能，还带有删除功能，不会浪费OSS的流量（省钱）。
+2. 在程序启动时，程序会把OSS和本地的文件进行MD5对比，所以由始至终，本地和OSS的文件都是相同的。
+3. 带有CDN刷新功能，所以你不必手动刷新文件。
 ## 使用方法 Usage
 Install 安装
 ```
@@ -36,14 +41,18 @@ require('syncoss')({
         securityToken: "",
         //your OSS location server url, below it is a HanZhou OSS url example
         //你的OSS地理服务器URL，如在杭州，即像如下填写
-        endpoint: 'http://oss-cn-hangzhou.aliyuncs.com',
-        //just leave it
-        //不用修改
-        apiVersion: '2013-10-15'
+        endpoint: 'http://oss-cn-hangzhou.aliyuncs.com'
     },
     //if you want to refresh cdn after upload or update files. Just provide below property.
     //如果你需要在上传文件到ＯＳＳ之后更新相应的ＣＤＮ缓存，只需提供以下这个参数即可
     cdnDomain: 'oss.mentry.cn',
+    cdn: {
+       //You can set up your CDN configure, check out CDN API.
+      //你也可以设置CDN的参数，具体请参考CDN的API
+      accessKeyId: YourAccessKeyId,
+      secretAccessKey: YourAccessKeySecret
+    },
+    AccessControlAllowOrigin: 'www.mentry.cn',
     //bucket name
     //bucket 名称
     bucket: 'mentry-oss',
@@ -61,7 +70,7 @@ require('syncoss')({
     cwd: 'public',
     //the directories you need to watch, can be a array or a string(use space to split directories name).
     //需要监视的文件夹，可以是数组，也可是字符串（使用空格分隔文件夹）。
-    src: ['css', 'js']
+    src: ['css', 'js', '!exclude-folder', '!exclude/exclude.file' ]
 });
 ```
 ## Work flow 工作流程
