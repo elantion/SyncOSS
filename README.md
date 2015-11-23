@@ -2,6 +2,7 @@
 A Node.js package used for synchronizing files between local and OSS.
 
 一个用于同步本地文件与阿里云OSS的Node.js模块。
+
 ## Intro 功能介绍
 I love Gulp, but I don't want to update my files to OSS after edit my source files. So I make this little tool to make a little help.
 After I make some progress, this module have more features then I expected.
@@ -16,6 +17,7 @@ local and OSS files are definitely the same.
 1. 不仅有上传和更新功能，还带有删除功能，不会浪费OSS的流量（省钱）。
 2. 在程序启动时，程序会把OSS和本地的文件进行MD5对比，所以由始至终，本地和OSS的文件都是相同的。
 3. 带有CDN刷新功能，所以你不必手动刷新文件。
+
 ## 使用方法 Usage
 Install 安装
 ```
@@ -75,16 +77,15 @@ require('syncoss')({
     src: ['css', 'js', '!exclude-folder', '!exclude/exclude.file' ]
 });
 ```
-## Work flow 工作流程
-1. request all files' info under parent directory and store it into a array value. It is used for comparison.
 
+## Work flow 工作流程
+
+1. request all files' info under parent directory and store it into a array value. It is used for comparison.\n
    获取设定的OSS父文件夹下所有文件的信息，用于文件对比。
 2. Compare all files between local and OSS. If the ETag is different or OSS miss the file, SyncOSS will upload the local file to OSS.
-   If OSS has files that local do not have, then SyncOSS will try to delete the files in OSS.
-
+   If OSS has files that local do not have, then SyncOSS will try to delete the files in OSS.\n
    对比本地和OSS的文件，如ETag不同或者远程没有这个文件，那么就会上传或更新OSS的文件。如果OSS有，但本地没有的文件，那么SyncOSS就会将OSS这个文件删除。
-3. Watch local files. If local files have 'change', 'add' or 'delete' actions. The OSS relate files will have same action.
-
+3. Watch local files. If local files have 'change', 'add' or 'delete' actions. The OSS relate files will have same action.\n
    监视本地文件夹，当发现有文件“增删改”，即会触发相应的同步行为。例如本地删除一个文件，OSS也同样会将这个文件删除。
 
 ## Author 作者
