@@ -78,6 +78,7 @@ module.exports = function (options) {
                     Key: standerFilePath,
                     ContentEncoding: 'utf-8',
                     ContentType: contentType,
+                    AccessControlAllowOrigin: options.AccessControlAllowOrigin || '*',
                     CacheControl: options.CacheControl || 'no-cache',
                     Expires: options.Expires || null
                 }, function (putObjectErr, uploadedFileInfo) {
