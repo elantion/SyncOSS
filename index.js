@@ -169,6 +169,10 @@ module.exports = function (options) {
                     deleteFile(filePath);
                 }
             }
+            if(options.keepWatching === false){
+                filesWatcher.close();
+                console.log('Sync files watcher closed!');
+            }
         });
         //modify file
         filesWatcher.on('change', function (filePath) {

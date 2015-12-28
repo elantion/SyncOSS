@@ -14,15 +14,21 @@ local and OSS files are definitely the same.
 
 原本是想在使用Gulp的时候，我希望生成的文件能自动同步到阿里云OSS，这样我就不必每次编辑完文件之后都要手动更新。但随着不断更新，它的功能比想象的多得多。
 
-1. 不仅有上传和更新功能，还带有删除功能，不会浪费OSS的流量（省钱）。
+###优点
+1. 不仅有上传和更新功能，还带有删除功能，不会浪费OSS的容量（省钱）。
 2. 在程序启动时，程序会把OSS和本地的文件进行MD5对比，所以由始至终，本地和OSS的文件都是相同的。
 3. 带有CDN刷新功能，所以你不必手动刷新文件。
+
+###缺点
+1. 监视同步功能会耗费大量内存，如果你服务器内存较小（如只有1G），则不建议使用（可使用keepWatching:false将其关闭）
 
 ## 使用方法 Usage
 Install 安装
 ```
 npm install syncoss --save
 ```
+(Tested with node 5.*)
+(仅在node 5.*下测试过)
 
 Config example 配置参考以下代码:
 
@@ -66,6 +72,8 @@ require('syncoss')({
         //忽略“点(.)文件”, linux的隐藏文件
         ignored: /[\/\\]\./
     },
+    //文件变动监视功能，服务器内存少的时候建议设为false，将其关闭
+    keepWatching: false,
     //parent directory. If you don not set this property, SyncOSS will download all files' info in your bucket when startup.
     //So I recommend set this up. For example, I set it to 'public',
     //so it will only request the files' info under 'public' directory in OSS.
