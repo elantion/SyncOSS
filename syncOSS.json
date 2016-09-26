@@ -1,0 +1,24 @@
+{
+  "AccessKeyId": "xxx",
+  "AccessKeySecret": "xx",
+  "cdn": {
+    "apiVersion": "2014-11-11",
+    "endpoint": "https://cdn.aliyuncs.com"
+  },
+  "oss": {
+    "securityToken": "",
+    "endpoint": "http://oss-cn-hangzhou.aliyuncs.com",
+    "apiVersion": "2013-10-15"
+  },
+  "cdnDomain": "oss.mentry.cn",
+  "AccessControlAllowOrigin": "www.mentry.cn",
+  "bucket": "mentry-oss",
+  "watch": {
+    "ignored": ""
+  },
+  "keepWatching": true,
+  "syncDir": "public",
+  "syncFilter": [
+    ""
+  ]
+}

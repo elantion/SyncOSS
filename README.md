@@ -100,11 +100,10 @@ require('syncoss')({
    监视本地文件夹，当发现有文件“增删改”，即会触发相应的同步行为。例如本地删除一个文件，OSS也同样会将这个文件删除。
 
 ## Author 作者
-James Yin, the owner of http://www.mentry.cn
-Love to share.
+James Yin
 
 ## License
-Copyright (c) 2015 James Yin, elantion@gmail.com, http://www.mentry.cn
+Copyright (c) 2015 James Yin, elantion@gmail.com
 
 Permission is hereby granted, free of charge,
 to any person obtaining a copy of this software and associated documentation files (the "Software"),
