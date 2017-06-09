@@ -1,7 +1,15 @@
 #! /usr/bin/env node
-var path = require('path');
-var syncOSS = require('../lib/oss.js');
-var currentDir = process.cwd();
+const path = require('path');
+const commandLineArgs = require('command-line-args');
+const optionDefinitions = [
+    {name: 'watch', alias: 'w', type: Boolean, defaultOption: false}
+];
+const CMDArgs = commandLineArgs(optionDefinitions);
+let syncOSS = require('../lib/oss.js');
+let currentDir = process.cwd();
 //get setting object
-var ossSetting = require(path.join(currentDir, 'syncOSS.json'));
+let ossSetting = require(path.join(currentDir, 'syncOSS.json'));
+if(CMDArgs.watch !== undefined){
+    ossSetting.keepWatching = CMDArgs.watch;
+}
 syncOSS(ossSetting);

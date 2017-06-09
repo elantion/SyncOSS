@@ -1,22 +1,21 @@
 {
-  "AccessKeyId": "xxx",
-  "AccessKeySecret": "xx",
+  "AccessKeyId": "a5U4Zt4qVNE6gHOO",
+  "AccessKeySecret": "MfgYmPXYJAp3P6cdfPdcCOMQb0SWDO",
   "cdn": {
     "apiVersion": "2014-11-11",
     "endpoint": "https://cdn.aliyuncs.com"
   },
   "oss": {
-    "securityToken": "",
-    "endpoint": "http://oss-cn-hangzhou.aliyuncs.com",
-    "apiVersion": "2013-10-15"
+    "region": "oss-cn-qingdao",
+    "internal": false
   },
-  "cdnDomain": "oss.mentry.cn",
-  "AccessControlAllowOrigin": "www.mentry.cn",
-  "bucket": "mentry-oss",
+  "cdnDomain": "cdn.lazycoffee.com",
+  "AccessControlAllowOrigin": "www.lazycoffee.com",
+  "bucket": "lazycoffee",
   "watch": {
     "ignored": ""
   },
-  "keepWatching": true,
+  "keepWatching": false,
   "syncDir": "public",
   "syncFilter": [
     ""

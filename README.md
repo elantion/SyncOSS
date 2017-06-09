@@ -38,7 +38,11 @@ npm install syncoss -g
   "oss": {
     "securityToken": "", //TSS权限设置
     "endpoint": "http://oss-cn-hangzhou.aliyuncs.com", //oss地区
-    "apiVersion": "2013-10-15"
+    "region": "oss-cn-hangzhou", //endpoint 和 region 必须要提供其中一个，当设置了endpoint，region会被忽略
+    "internal": true, //配合region使用，如果指定internal为true，则访问内网节点,
+    "secure": true, //配合region使用，如果指定了secure为true，则使用HTTPS访问
+    "cname": "", //配合endpoint使用，如果指定了cname为true，则将endpoint视为用户绑定的自定义域名
+    "timeout": 60 //默认为60秒，指定访问OSS的API的超时时间
   },
   "cdnDomain": "oss.mentry.cn", //如果设置了这个参数，syncOSS将会自动刷新CDN文件
   "AccessControlAllowOrigin": "www.mentry.cn",
