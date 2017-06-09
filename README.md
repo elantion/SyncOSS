@@ -25,7 +25,7 @@ npm install syncoss -g
 
 2.配置
 
-请在项目根目录下放置syncOSS.json文件，参考下面的写法：（请删除注释，json是没有注释的)
+请在项目根目录下放置syncossConf.json文件，参考下面的写法：（请删除注释，json是没有注释的)
 
 ```json
 {
