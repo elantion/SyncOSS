@@ -1,6 +1,6 @@
 {
   "name": "syncoss",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Synchronizing local files and OSS.",
   "main": "index.js",
   "scripts": {

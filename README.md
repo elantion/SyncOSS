@@ -2,17 +2,13 @@
 
 同步本地与OSS文件，并自动刷新CDN。
 
-## 功能介绍
-
-原本是想在使用Gulp的时候，我希望生成的文件能自动同步到阿里云OSS，这样我就不必每次编辑完文件之后都要手动更新OSS文件。
-
 ###优点
 1. 不仅有上传和更新功能，还带有删除功能，不会浪费OSS的容量（省钱）。
 2. 在程序启动时，程序会把OSS和本地的文件进行MD5对比，所以由始至终，本地和OSS的文件都是相同的。
 3. 带有CDN刷新功能，所以你不必手动刷新文件。
 
 ###缺点
-1. 监视同步功能会耗费大量内存，如果你开发机内存较小（如只有1G），则不建议使用（可设置keepWatching:false将其关闭）。
+1. 监视同步功能（默认关闭）会耗费大量内存，如果你开发机内存较小（如只有1G），则不建议使用。
 2. 暂只能以“本地文件为准”方式同步，日后会添加更多模式。
 3. 目前没在服务器上使用过，只在windows开发机上运行过
 
@@ -32,8 +28,7 @@ npm install syncoss -g
   "AccessKeyId": "xxx",
   "AccessKeySecret": "xx",
   "cdn": {
-    "apiVersion": "2014-11-11",
-    "endpoint": "https://cdn.aliyuncs.com"
+    "domain": "cdn.lazycoffee.com"
   },
   "oss": {
     "securityToken": "", //TSS权限设置
@@ -43,10 +38,10 @@ npm install syncoss -g
     "secure": true, //配合region使用，如果指定了secure为true，则使用HTTPS访问
     "cname": "", //配合endpoint使用，如果指定了cname为true，则将endpoint视为用户绑定的自定义域名
     "timeout": 60 //默认为60秒，指定访问OSS的API的超时时间
+    "autoRefreshCDN": true //可选，文件更新后是否自动刷新CDN
   },
-  "cdnDomain": "oss.mentry.cn", //如果设置了这个参数，syncOSS将会自动刷新CDN文件
-  "AccessControlAllowOrigin": "www.mentry.cn",
-  "bucket": "mentry-oss",
+  "AccessControlAllowOrigin": "www.lazycoffee.com",
+  "bucket": "lazycoffee",
   "watch": {
     "ignored": ""
   },
@@ -62,8 +57,18 @@ npm install syncoss -g
 
 打开命令行，cd到项目根目录，运行:
 
-```shell
+```bash
 syncOSS
+```
+
+调试模式：
+```bash
+syncoss --debug
+```
+
+文件监视模式:
+```bash
+syncoss --watch
 ```
 
 ## 工作流程
@@ -73,7 +78,7 @@ syncOSS
 3. 监视本地文件夹，当发现有文件“增删改”，即会触发相应的同步行为。例如本地删除一个文件，OSS也同样会将这个文件删除。
 
 ## Author 作者
-James Yin
+James Yin<elantion@gmail.com>
 
 ## License
 Copyright (c) 2015 James Yin, elantion@gmail.com
