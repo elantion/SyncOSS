@@ -119,16 +119,19 @@ export = async function (options) {
                 if (readFileErr) {
                     throw readFileErr;
                 }
-                oss.putObject({
+                const putConfig:any = {
                     Bucket: bucket.Name,
                     Body: fileData,
                     Key: standerFilePath,
-                    ContentEncoding: 'utf-8',
                     ContentType: contentType,
                     AccessControlAllowOrigin: options.AccessControlAllowOrigin || '*',
                     CacheControl: options.CacheControl || 'no-cache',
                     Expires: options.Expires || null
-                }, function (putObjectErr) {
+                };
+                if(options.contentEncoding){
+                    putConfig.ContentEncoding = options.contentEncoding;
+                }
+                oss.putObject(putConfig, function (putObjectErr) {
                     if (putObjectErr) {
                         console.error('error:', putObjectErr);
                         return putObjectErr;
@@ -141,7 +144,7 @@ export = async function (options) {
                         localPaths.push(standerFilePath);
                     }
                     //refresh cdn
-                    if(cdn){
+                    if(options.autoRefreshCDN && cdn){
                         let cdnObjectPath = url.format({
                             protocol: 'http',
                             hostname: options.cdnDomain,

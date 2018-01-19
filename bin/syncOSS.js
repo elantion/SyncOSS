@@ -6,7 +6,7 @@ const optionDefinitions = [
 	{name: 'debug', type: Boolean}
 ];
 const CMDArgs = commandLineArgs(optionDefinitions);
-let syncOSS = require('../lib/oss.js');
+let syncOSS = require('../dist/oss.js');
 let currentDir = process.cwd();
 //get setting object
 let ossSetting = require(path.join(currentDir, 'syncossConf.json'));
