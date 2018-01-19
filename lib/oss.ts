@@ -24,6 +24,9 @@ export = async function (options) {
     if(!options.oss.endpoint){
         options.oss.endpoint = (options.oss.secure ? 'https' : 'http') + '://' + options.oss.region + (options.oss.internal ? '.internal' : '') + '.aliyuncs.com';
     }
+    if(options.oss.secure === undefined){
+        options.cdn.secure = /https/.test(options.oss.endpoint);
+    }
     let oss = new ALY.OSS(options.oss);
     //create cdn instance
     let cdn:ALY.CDN;
@@ -56,6 +59,19 @@ export = async function (options) {
     }
     if(!bucket){
         throw new Error('Can not find your bucket. Pleas check the bucket name again.');
+    }
+    //get cdn refresh quota
+    if(options.oss.autoRefreshCDN && cdn){
+        let getCDNRefreshQuota = function () {
+            return new Promise(function (resolve) {
+                cdn.describeRefreshQuota(function (err, res) {
+                    resolve(res);
+                });
+            });
+        };
+        let res:any = await getCDNRefreshQuota();
+        options.cdn.refreshQuota = res.UrlRemain;
+        options.debug && console.log('Refresh CDN file quota: ' + options.cdn.refreshQuota);
     }
     //oss use unix type of file type
     const prefix = cwd.replace(/\\/g, '/');
@@ -144,12 +160,24 @@ export = async function (options) {
                         localPaths.push(standerFilePath);
                     }
                     //refresh cdn
-                    if(options.autoRefreshCDN && cdn){
+                    if(options.oss.autoRefreshCDN && cdn){
+                        if(options.cdn.refreshQuota < 1){
+                            console.error('There is no refresh cdn url quota today.');
+                            return;
+                        }
+                        let cdnDomain = '';
+                        if(/^http/.test(options.cdn.domain)){
+                            cdnDomain = options.cdn.domain.replace(/^https?:?\/?\/?/, '');
+                            options.cdn.secure === undefined && (options.cdn.secure = /^https/.test(options.cdn.domein));
+                        }else{
+                            cdnDomain = options.cdn.domain;
+                        }
                         let cdnObjectPath = url.format({
-                            protocol: 'http',
-                            hostname: options.cdnDomain,
+                            protocol: options.oss.secure ? 'https' : 'http',
+                            hostname: cdnDomain,
                             pathname: standerFilePath
                         });
+                        options.debug && console.log('Refreshing CDN file: ', cdnObjectPath);
                         cdn.refreshObjectCaches({
                             ObjectType: 'File',
                             ObjectPath: cdnObjectPath
@@ -157,7 +185,8 @@ export = async function (options) {
                             if(refreshCDNErr){
                                 console.error('refresh cdn error: ', refreshCDNErr);
                             }else{
-                                console.log('Refresh cdn file success: ', standerFilePath);
+                                options.cdn.refreshQuota--;
+                                console.log('Refresh cdn file success: ', cdnObjectPath);
                             }
                         });
                     }

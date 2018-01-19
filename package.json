@@ -1,6 +1,6 @@
 {
   "name": "syncoss",
-  "version": "2.0.1",
+  "version": "2.0.4",
   "description": "Synchronizing local files and OSS.",
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,7 @@
     "sync",
     "files"
   ],
-  "bin": {
-    "syncOSS": "bin/syncOSS.js"
-  },
+  "bin": "./bin/syncOSS.js",
   "author": "JamesYin",
   "dependencies": {
     "aliyun-sdk": "^1.10.5",
