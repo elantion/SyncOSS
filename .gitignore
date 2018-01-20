@@ -28,3 +28,4 @@ node_modules
 syncOSS.json
 .idea
 /.history
+/syncossConf.json

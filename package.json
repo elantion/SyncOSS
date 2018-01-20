@@ -4,8 +4,8 @@
   "description": "Synchronizing local files and OSS.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p tsconfig.json",
+    "test": "node ./bin/syncOSS.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,10 @@
   "bin": "./bin/syncOSS.js",
   "author": "JamesYin",
   "dependencies": {
-    "aliyun-sdk": "^1.10.5",
-    "chokidar": "^1.7.0",
-    "command-line-args": "^4.0.6",
-    "mime": "^1.3.6"
+    "aliyun-sdk": "^1.11.2",
+    "chokidar": "^2.0.0",
+    "command-line-args": "^5.0.1",
+    "mime": "^2.2.0"
   },
   "license": "MIT",
   "bugs": {
@@ -31,8 +31,9 @@
   },
   "homepage": "https://github.com/elantion/SyncOSS#readme",
   "devDependencies": {
-    "@types/node": "^7.0.29",
+    "@types/node": "^9.3.0",
     "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
     "webpack": "^3.10.0"
   }
 }
