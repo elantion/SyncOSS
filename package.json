@@ -1,39 +1,38 @@
 {
-  "name": "syncoss",
-  "version": "2.0.5",
-  "description": "Synchronizing local files and OSS.",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "node ./bin/syncOSS.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elantion/SyncOSS.git"
-  },
-  "keywords": [
-    "aliyun",
-    "oss",
-    "sync",
-    "files"
-  ],
-  "bin": "./bin/syncOSS.js",
-  "author": "JamesYin",
-  "dependencies": {
-    "aliyun-sdk": "^1.11.2",
-    "chokidar": "^2.0.0",
-    "command-line-args": "^5.0.1",
-    "mime": "^2.2.0"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/elantion/SyncOSS/issues"
-  },
-  "homepage": "https://github.com/elantion/SyncOSS#readme",
-  "devDependencies": {
-    "@types/node": "^9.3.0",
-    "ts-loader": "^3.2.0",
-    "typescript": "^2.6.2",
-    "webpack": "^3.10.0"
-  }
+    "name": "syncoss",
+    "version": "2.0.5",
+    "description": "Synchronizing local files and OSS.",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "test": "node ./bin/syncOSS.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elantion/SyncOSS.git"
+    },
+    "keywords": [
+        "aliyun",
+        "oss",
+        "sync",
+        "files"
+    ],
+    "bin": "./bin/syncOSS.js",
+    "author": "JamesYin",
+    "dependencies": {
+        "aliyun-sdk": "^1.12.3",
+        "chokidar": "^3.4.3",
+        "command-line-args": "^5.1.1",
+        "mime": "^2.4.6"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/elantion/SyncOSS/issues"
+    },
+    "homepage": "https://github.com/elantion/SyncOSS#readme",
+    "devDependencies": {
+        "@types/node": "^14.14.8",
+        "ts-loader": "^8.0.11",
+        "typescript": "^4.0.5"
+    }
 }
